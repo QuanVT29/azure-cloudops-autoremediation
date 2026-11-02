@@ -312,6 +312,5 @@ Engineer: Vo Ta Minh Quan (QuanVT29)
 
 Target Role: Azure Cloud Operations / DevSecOps Engineer
 
-
-
+Contact: www.linkedin.com/in/quân-vt-243752337
 
