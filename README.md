@@ -16,7 +16,7 @@ The infrastructure is provisioned **100% via Modular Terraform** across a 5-laye
 
 The platform implements a resilient, zero-trust cloud architecture spanning 5 distinct operational layers:
 
-
+![](images/azure-architecture.png)
 
 
 <br>
