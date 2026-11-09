@@ -31,7 +31,7 @@ resource "azurerm_network_interface_application_security_group_association" "jum
   application_security_group_id = azurerm_application_security_group.jumpbox.id
 }
 
-# Low-cost B1s Linux Jumpbox Virtual Machine
+# Low-cost Linux Jumpbox Virtual Machine
 resource "azurerm_linux_virtual_machine" "jumpbox" {
   name                  = "vm-${var.project_name}-${var.environment}-jumpbox"
   location              = var.location
