@@ -75,9 +75,10 @@ The platform implements a resilient, zero-trust cloud architecture spanning 5 di
 │   │   ├── app.py                      # Lightweight mock banking API (FastAPI)
 │   │   └── requirements.txt            # App dependencies (App Insights, Redis, MSSQL)
 │   ├── manifests/
-│   │   ├── deployment.yaml             # Kubernetes Deployment & SecretProviderClass
-│   │   └── service.yaml                # ClusterIP & Ingress configuration
-│   └── Dockerfile                      # Hardened container image definition
+│   │   ├── 01-secret-provider-class.yaml     # Azure Key Vault CSI Driver secret mapping
+│   │   └── 02-redis.yaml                     # In-Cluster Redis Deployment & ClusterIP Service
+        └── 03-banking-app.yaml               # Core Banking Deployment & External LoadBalancer Service
+│   └── Dockerfile                            # Hardened container image definition
 ├── scripts/
 │   ├── chaos-test.sh                   # Fault-injection CLI testing toolkit
 │   └── setup-servicenow-pdi.sh         # Automated Table API test payload generator
