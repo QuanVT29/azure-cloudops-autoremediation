@@ -1,0 +1,91 @@
+# Purpose: Deploy the Core Banking Application mounting secrets from Key Vault via CSI
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banking-app
+  namespace: default
+  labels:
+    app: banking-app
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: banking-app
+  template:
+    metadata:
+      labels:
+        app: banking-app
+    spec:
+      containers:
+        - name: banking-api
+          image: python:3.11-slim
+          workingDir: /app
+          command:
+            - /bin/bash
+            - -c
+            - |
+              pip install --no-cache-dir fastapi uvicorn redis pyodbc &&
+              uvicorn app:app --host 0.0.0.0 --port 8080
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SQL_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: banking-db-secrets
+                  key: SQL_CONNECTION_STRING
+            - name: REDIS_CONNECTION_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: banking-db-secrets
+                  key: REDIS_CONNECTION_STRING
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: true
+            - name: app-code-volume
+              mountPath: "/app"
+              readOnly: true
+          resources:
+            requests:
+              cpu: "150m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "azure-kv-banking-secrets"
+        - name: app-code-volume
+          configMap:
+            name: banking-app-source
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: banking-app-service
+  namespace: default
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: banking-app
