@@ -82,12 +82,13 @@ The platform implements a resilient, zero-trust cloud architecture spanning 5 di
 ├── scripts/
 │   ├── chaos-test.sh                   # Fault-injection CLI testing toolkit
 │   └── setup-servicenow-pdi.sh         # Automated Table API test payload generator
+    └── remediate-aks-pods.ps1          # PowerShell Auto-Healing Runbook for AKS (<60s MTTR)
 └── terraform/
     ├── environments/
     │   └── prod/
     │       ├── 00-bootstrap/           # TFState Storage, Resource Groups, Budget Alerts
     │       ├── 01-network/             # VNet, Subnets, NSGs, Jumpbox VM
-    │       ├── 02-data-secrets/        # Azure SQL Serverless, Redis C0, Key Vault
+    │       ├── 02-data-secrets/        # Azure SQL Serverless, Private Endpoints, Key Vault
     │       ├── 03-compute/             # AKS Cluster, Managed Identity, CSI Driver
     │       ├── 04-telemetry/           # Log Analytics Workspace, Application Insights
     │       └── 05-operations/          # Alert Rules, Action Groups, Runbooks, Logic App
