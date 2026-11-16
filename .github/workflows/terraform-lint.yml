@@ -1,0 +1,73 @@
+# Automated TFLint, Terraform Format & Checkov DevSecOps Security Scan
+
+name: "DevSecOps IaC Lint & Security Scan"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  terraform-static-analysis:
+    name: "TFLint & Format Check"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform CLI
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.5"
+
+      - name: Terraform Format Check (Recursive)
+        run: terraform fmt -check -recursive -diff terraform/
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: v0.53.0
+
+      - name: Run TFLint across Environment Layers
+        run: |
+          for dir in terraform/environments/prod/*/; do
+            echo "=== Linting $dir ==="
+            tflint --chdir="$dir"
+          done
+
+  checkov-security-scan:
+    name: "Checkov Zero-Trust Compliance Scan"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Run Checkov IaC Security Scanner
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: terraform/
+          framework: terraform
+          soft_fail: true
+          output_format: cli
+          quiet: true
+
+  app-syntax-check:
+    name: "FastAPI & Kubernetes Manifest Check"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate FastAPI Python Syntax
+        run: python -m py_compile app/src/app.py

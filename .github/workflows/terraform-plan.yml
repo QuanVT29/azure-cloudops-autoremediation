@@ -1,0 +1,48 @@
+name: "Terraform Multi-Layer Validation Pipeline"
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform-plan.yml"
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-prod-layers:
+    name: "Validate Layer (${{ matrix.layer }})"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        layer:
+          - 00-bootstrap
+          - 01-network
+          - 02-data-secrets
+          - 03-compute
+          - 04-telemetry
+          - 05-operations
+
+    defaults:
+      run:
+        working-directory: terraform/environments/prod/${{ matrix.layer }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.5"
+
+      - name: Terraform Init (Backendless CI Mode)
+        run: terraform init -backend=false
+
+      - name: Terraform Validate Syntax & Schema
+        run: terraform validate
