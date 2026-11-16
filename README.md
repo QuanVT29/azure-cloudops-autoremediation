@@ -92,12 +92,6 @@ The platform implements a resilient, zero-trust cloud architecture spanning 5 di
     │       ├── 03-compute/             # AKS Cluster, Managed Identity, CSI Driver
     │       ├── 04-telemetry/           # Log Analytics Workspace, Application Insights
     │       └── 05-operations/          # Alert Rules, Action Groups, Runbooks, Logic App
-    └── modules/
-        ├── networking/
-        ├── database/
-        ├── aks/
-        ├── monitoring/
-        └── automation/
 ```
 
 
