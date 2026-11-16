@@ -34,11 +34,14 @@ jobs:
         with:
           tflint_version: v0.53.0
 
+      - name: Initialize TFLint Azure Ruleset
+        run: tflint --init --config="${{ github.workspace }}/.tflint.hcl"
+
       - name: Run TFLint across Environment Layers
         run: |
           for dir in terraform/environments/prod/*/; do
             echo "=== Linting $dir ==="
-            tflint --chdir="$dir"
+            tflint --config="${{ github.workspace }}/.tflint.hcl" --chdir="$dir"
           done
 
   checkov-security-scan:
@@ -51,11 +54,7 @@ jobs:
       - name: Run Checkov IaC Security Scanner
         uses: bridgecrewio/checkov-action@v12
         with:
-          directory: terraform/
-          framework: terraform
-          soft_fail: true
-          output_format: cli
-          quiet: true
+          config_file: .checkov.yaml
 
   app-syntax-check:
     name: "FastAPI & Kubernetes Manifest Check"

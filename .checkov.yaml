@@ -1,0 +1,14 @@
+directory:
+  - terraform/
+framework:
+  - terraform
+soft-fail: false
+quiet: true
+skip-check:
+  # Intentional FinOps & Ephemeral Lab Waivers
+  - CKV_AZURE_42   # Key Vault recoverability disabled for clean ephemeral destroy/redeploy cycles
+  - CKV_AZURE_110  # Key Vault purge protection disabled to avoid 7-90 day soft-delete lockouts
+  - CKV_AZURE_41   # Dynamic DB/Redis connection strings rotated per deployment lifecycle
+  - CKV_AZURE_114  # Secret content_type optional for internal CSI driver mounts
+  - CKV_AZURE_160  # HTTP port 80 intentionally exposed on LoadBalancer for demo dashboard without custom TLS domain
+  - CKV_AZURE_50   # AKS system node pool requires VM extensions for Container Insights (omsagent)
