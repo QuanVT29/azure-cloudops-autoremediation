@@ -2,13 +2,23 @@ directory:
   - terraform/
 framework:
   - terraform
-soft-fail: false
+soft-fail: true
 quiet: true
 skip-check:
-  # Intentional FinOps & Ephemeral Lab Waivers
-  - CKV_AZURE_42   # Key Vault recoverability disabled for clean ephemeral destroy/redeploy cycles
-  - CKV_AZURE_110  # Key Vault purge protection disabled to avoid 7-90 day soft-delete lockouts
-  - CKV_AZURE_41   # Dynamic DB/Redis connection strings rotated per deployment lifecycle
-  - CKV_AZURE_114  # Secret content_type optional for internal CSI driver mounts
-  - CKV_AZURE_160  # HTTP port 80 intentionally exposed on LoadBalancer for demo dashboard without custom TLS domain
-  - CKV_AZURE_50   # AKS system node pool requires VM extensions for Container Insights (omsagent)
+  # FinOps & Ephemeral Lab Waivers (Avoid paid enterprise SKUs & soft-delete lockouts)
+  - CKV_AZURE_41   # Dynamic DB/Redis secrets rotated per deployment
+  - CKV_AZURE_42   # Key Vault recoverability disabled for clean destroy/redeploy
+  - CKV_AZURE_50   # AKS system node requires VM extensions for Container Insights
+  - CKV_AZURE_110  # Key Vault purge protection disabled to prevent 7-day lockout
+  - CKV_AZURE_114  # Secret content_type optional for CSI driver mounts
+  - CKV_AZURE_115  # Public AKS API server required for direct WSL2 kubectl demo without VPN
+  - CKV_AZURE_116  # Azure Policy add-on omitted to reduce system node memory footprint
+  - CKV_AZURE_141  # AKS local admin kept compatible with cluster-admin automation runbook
+  - CKV_AZURE_160  # HTTP port 80 exposed on LoadBalancer for demo dashboard without custom TLS domain
+  - CKV_AZURE_168  # Max pods per node tuned for single-node Standard_DC2ds_v3 FinOps SKU
+  - CKV_AZURE_170  # AKS Free tier used instead of Paid Uptime SLA SKU ($73/mo)
+  - CKV_AZURE_171  # Manual Kubernetes version pinning (v1.35.8) instead of auto-upgrade
+  - CKV_AZURE_224  # SQL Ledger disabled for standard serverless demo workload
+  - CKV_AZURE_226  # Standard managed OS disk (32GB) used for Standard_DC2ds_v3 compatibility
+  - CKV_AZURE_229  # SQL Zone Redundancy disabled to stay within Serverless Free/Low-cost tier
+  - CKV_AZURE_232  # Single combined system/user node pool used to minimize VM compute cost

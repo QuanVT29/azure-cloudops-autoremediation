@@ -5,7 +5,7 @@ config {
 
 plugin "terraform" {
   enabled = true
-  preset  = "recommended"
+  preset  = "all"
 }
 
 plugin "azurerm" {
@@ -14,7 +14,19 @@ plugin "azurerm" {
   source  = "github.com/terraform-linters/tflint-ruleset-azurerm"
 }
 
-# Allow shared boilerplate variables across multi-layer environments
+# Disable style rules that conflict with domain-split file naming (aks.tf, alerts.tf, etc.)
+rule "terraform_standard_module_structure" {
+  enabled = false
+}
+
 rule "terraform_unused_declarations" {
+  enabled = false
+}
+
+rule "terraform_documented_variables" {
+  enabled = false
+}
+
+rule "terraform_documented_outputs" {
   enabled = false
 }
