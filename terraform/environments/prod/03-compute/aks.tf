@@ -35,11 +35,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   # Azure CNI Networking: Direct VNet Pod routing to Private Endpoints
   network_profile {
-    network_plugin     = "azure"
-    network_policy     = "azure"
-    dns_service_ip     = "10.100.0.10"
-    service_cidr       = "10.100.0.0/16"
-    load_balancer_sku  = "standard"
+    network_plugin    = "azure"
+    network_policy    = "azure"
+    dns_service_ip    = "10.100.0.10"
+    service_cidr      = "10.100.0.0/16"
+    load_balancer_sku = "standard"
   }
 
   # Secrets Store CSI Driver Add-on (Key Vault Integration)

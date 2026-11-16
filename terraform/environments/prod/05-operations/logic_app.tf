@@ -54,8 +54,8 @@ resource "azurerm_logic_app_action_http" "create_servicenow_incident" {
   uri          = var.servicenow_incident_api_url
 
   headers = {
-    "Content-Type" = "application/json"
-    "Accept"       = "application/json"
+    "Content-Type"  = "application/json"
+    "Accept"        = "application/json"
     "Authorization" = "Basic ${base64encode("${var.servicenow_username}:${var.servicenow_password}")}"
   }
 

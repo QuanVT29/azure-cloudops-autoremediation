@@ -63,5 +63,5 @@ variable "servicenow_username" {
 variable "servicenow_password" {
   description = "ServiceNow PDI admin password"
   type        = string
-  sensitive   = true 
+  sensitive   = true
 }
