@@ -26,7 +26,7 @@ Chaos Fault Injection ──▶ Log Analytics (KQL) ──▶ Azure Monitor Aler
 
 Before injecting faults, full-stack telemetry is verified across **Log Analytics Workspace (`law-banking-ops-prod-sea`)**, **Container Insights**, and **Application Insights (`appi-banking-ops-prod-sea`)** to ensure zero blind spots across AKS pods and downstream data dependencies.
 
-![Observability Command Center](./images/demo/01-observability-command-center.png)
+![Observability Command Center](./images/01-observability-command-center.png)
 > **📸 Screenshot Note (`01-observability-command-center.png`):** *Chụp màn hình Azure Portal tại `law-banking-ops-prod-sea` (mục **Logs** hiển thị các bảng `ContainerLogV2`, `KubeEvents` hoặc biểu đồ **Application Map** trong Application Insights).*
 
 ---
