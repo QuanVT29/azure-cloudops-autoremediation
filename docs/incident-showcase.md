@@ -70,8 +70,8 @@ Simultaneously, Azure Automation Runbook **`Remediate-AksBankingPods`** authenti
 * **Trigger:** Click **`Trigger High Latency (>3.5s)`** on the Web Dashboard (or run `./scripts/chaos-test.sh latency 3`).
 * **Result:** Alert rule `alert-p2-banking-high-latency-sla` detects `CHAOS_EVENT_P2` (`3500ms > 2500ms` SLA threshold) and logs a **Sev2 ServiceNow Incident** for L2 DBA/Application investigation **without** blindly restarting healthy pods.
 
-![P2 High Latency Triage](./images/demo/04-p2-latency-triage.png)
-> **📸 Screenshot Note (`04-p2-latency-triage.png`):** *Chụp màn hình dòng log cảnh báo `3500ms` trên Web Console / KQL query kèm phiếu **Sev2** trên ServiceNow (hoặc email cảnh báo P2).*
+![P2 High Latency Triage](../images/04.1-p2-latency-triage.png)
+![P2 High Latency Triage](../images/04.2-p2-latency-triage.png)
 
 ---
 
