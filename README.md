@@ -1,3 +1,4 @@
+> [!TIP]
 > **Live Incident & Observability Proof-of-Concept:** View the step-by-step demonstration of full-stack telemetry, KQL threat/fault hunting, automated ServiceNow ITSM ticketing, and `<60s` autonomous pod recovery in **[`docs/incident-showcase.md`](./docs/incident-showcase.md)**.
 <br>
 
