@@ -66,7 +66,6 @@ The platform implements a resilient, zero-trust cloud architecture spanning 5 di
 │       ├── terraform-lint.yml          # TFLint & Checkov security analysis
 │       └── terraform-plan.yml          # Automated IaC validation pipeline
 ├── docs/
-│   ├── architecture-diagram.png        # High-resolution architectural blueprint
 │   ├── kql-diagnostic-playbook.md      # Comprehensive KQL queries & RCA triage catalog
 │   ├── runbook-sop.md                  # Standard Operating Procedures for L1/L2 NOC engineers
 │   └── rca-incident-sample.md          # Sample Root Cause Analysis (P1 Post-Mortem report)
