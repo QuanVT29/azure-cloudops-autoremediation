@@ -31,6 +31,10 @@ Before injecting faults, full-stack telemetry is verified across **Log Analytics
 
 ---
 
+
+
+<br>
+
 ## 2. Incident Scenario #1: P1 Critical API Outage (HTTP 500)
 
 * **Objective:** Simulate a severe transaction pipeline failure (`HTTP 500`) and verify automated detection, ServiceNow incident logging, and autonomous pod recovery in under 60 seconds.
@@ -56,6 +60,9 @@ Simultaneously, Azure Automation Runbook **`Remediate-AksBankingPods`** authenti
 
 ---
 
+
+<br>
+
 ## 3. Incident Scenario #2: P1 Container OOM Crash (`CrashLoopBackOff`)
 
 * **Objective:** Validate High Availability (HA) continuity and self-healing when a container exceeds its `512Mi` memory limit and is terminated by the Linux `OOMKiller` (Exit Code `137`).
@@ -67,6 +74,9 @@ Simultaneously, Azure Automation Runbook **`Remediate-AksBankingPods`** authenti
 
 ---
 
+
+<br>
+
 ## 4. Incident Scenario #3: P2 Performance SLA Breach (`>3.5s` Latency)
 
 * **Objective:** Demonstrate intelligent SRE triage differentiation—distinguishing performance degradation (`P2`) from hard outages (`P1`).
@@ -77,6 +87,8 @@ Simultaneously, Azure Automation Runbook **`Remediate-AksBankingPods`** authenti
 > **📸 Screenshot Note (`04-p2-latency-triage.png`):** *Chụp màn hình dòng log cảnh báo `3500ms` trên Web Console / KQL query kèm phiếu **Sev2** trên ServiceNow (hoặc email cảnh báo P2).*
 
 ---
+
+<br>
 
 ## 5. Standard Operating Procedures & Post-Mortem Artifacts
 
