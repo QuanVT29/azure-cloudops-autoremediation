@@ -26,7 +26,7 @@ Chaos Fault Injection ──▶ Log Analytics (KQL) ──▶ Azure Monitor Aler
 
 Before injecting faults, full-stack telemetry is verified across **Log Analytics Workspace (`law-banking-ops-prod-sea`)**, **Container Insights**, and **Application Insights (`appi-banking-ops-prod-sea`)** to ensure zero blind spots across AKS pods and downstream data dependencies.
 
-![Observability Command Center](./images/01-observability-command-center.png)
+![Observability Command Center](../images/01-observability-command-center.png)
 
 
 ---
@@ -43,19 +43,19 @@ Before injecting faults, full-stack telemetry is verified across **Log Analytics
 ### Step 2.1: Fault Injection & KQL Detection
 The FastAPI worker emits `CHAOS_EVENT_P1` error logs, which are ingested into Log Analytics and matched by the scheduled KQL alert rule `alert-p1-banking-http500-outage`.
 
-![P1 Fault Injection and KQL Query](./images/02.1a-p1-chaos-kql.png)
-![P1 Fault Injection and KQL Query](./images/02.2a-p1-chaos-kql.png)
+![P1 Fault Injection and KQL Query](../images/02.1a-p1-chaos-kql.png)
+![P1 Fault Injection and KQL Query](../images/02.2a-p1-chaos-kql.png)
 
 ### Step 2.2: Azure Monitor Alert & Automated ServiceNow ITSM Ticket
 Action Group `ag-banking-ops-prod-sea` triggers Logic App `logic-banking-ops-prod-itsm-sea`, automatically creating a **Sev1 Incident** in ServiceNow PDI via the Table API.
 
-![Azure Monitor Alert and ServiceNow Ticket](./images/02.1b-p1-alert-servicenow.png)
-![Azure Monitor Alert and ServiceNow Ticket](./images/02.2b-p1-alert-servicenow.png)
+![Azure Monitor Alert and ServiceNow Ticket](../images/02.1b-p1-alert-servicenow.png)
+![Azure Monitor Alert and ServiceNow Ticket](../images/02.2b-p1-alert-servicenow.png)
 
 ### Step 2.3: Autonomous Pod Recovery (`<60s MTTR`)
 Simultaneously, Azure Automation Runbook **`Remediate-AksBankingPods`** authenticates via System-Assigned Managed Identity and executes `kubectl rollout restart deployment/banking-app`.
 
-![Runbook Execution and Pod Replacement](./images/02c-p1-runbook-recovery.png)
+![Runbook Execution and Pod Replacement](../images/02c-p1-runbook-recovery.png)
 
 
 ---
