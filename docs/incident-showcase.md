@@ -27,7 +27,7 @@ Chaos Fault Injection ──▶ Log Analytics (KQL) ──▶ Azure Monitor Aler
 Before injecting faults, full-stack telemetry is verified across **Log Analytics Workspace (`law-banking-ops-prod-sea`)**, **Container Insights**, and **Application Insights (`appi-banking-ops-prod-sea`)** to ensure zero blind spots across AKS pods and downstream data dependencies.
 
 ![Observability Command Center](./images/01-observability-command-center.png)
-> **📸 Screenshot Note (`01-observability-command-center.png`):** *Chụp màn hình Azure Portal tại `law-banking-ops-prod-sea` (mục **Logs** hiển thị các bảng `ContainerLogV2`, `KubeEvents` hoặc biểu đồ **Application Map** trong Application Insights).*
+
 
 ---
 
@@ -43,20 +43,20 @@ Before injecting faults, full-stack telemetry is verified across **Log Analytics
 ### Step 2.1: Fault Injection & KQL Detection
 The FastAPI worker emits `CHAOS_EVENT_P1` error logs, which are ingested into Log Analytics and matched by the scheduled KQL alert rule `alert-p1-banking-http500-outage`.
 
-![P1 Fault Injection and KQL Query](./images/demo/02a-p1-chaos-kql.png)
-> **📸 Screenshot Note (`02a-p1-chaos-kql.png`):** *Chụp ghép hoặc chụp màn hình khung **Live SRE Telemetry Console** trên Web báo lỗi đỏ `[HTTP 500]` cùng kết quả truy vấn KQL tìm thấy `CHAOS_EVENT_P1` trong Log Analytics.*
+![P1 Fault Injection and KQL Query](./images/02.1a-p1-chaos-kql.png)
+![P1 Fault Injection and KQL Query](./images/02.2a-p1-chaos-kql.png)
 
 ### Step 2.2: Azure Monitor Alert & Automated ServiceNow ITSM Ticket
 Action Group `ag-banking-ops-prod-sea` triggers Logic App `logic-banking-ops-prod-itsm-sea`, automatically creating a **Sev1 Incident** in ServiceNow PDI via the Table API.
 
-![Azure Monitor Alert and ServiceNow Ticket](./images/demo/02b-p1-alert-servicenow.png)
-> **📸 Screenshot Note (`02b-p1-alert-servicenow.png`):** *Chụp trạng thái **Fired** của `alert-p1-banking-http500-outage` (hoặc Logic App **Runs history** xanh) kèm phiếu sự cố **Incident** mới tạo trên giao diện ServiceNow.*
+![Azure Monitor Alert and ServiceNow Ticket](./images/02.1b-p1-alert-servicenow.png)
+![Azure Monitor Alert and ServiceNow Ticket](./images/02.2b-p1-alert-servicenow.png)
 
 ### Step 2.3: Autonomous Pod Recovery (`<60s MTTR`)
 Simultaneously, Azure Automation Runbook **`Remediate-AksBankingPods`** authenticates via System-Assigned Managed Identity and executes `kubectl rollout restart deployment/banking-app`.
 
-![Runbook Execution and Pod Replacement](./images/demo/02c-p1-runbook-recovery.png)
-> **📸 Screenshot Note (`02c-p1-runbook-recovery.png`):** *Chụp tab **Output** của Job `Remediate-AksBankingPods` báo `[SUCCESS] Auto-Remediation completed` kèm góc trên bên phải Web Dashboard hiển thị tên **Pod mới** sau khi Refresh.*
+![Runbook Execution and Pod Replacement](./images/02c-p1-runbook-recovery.png)
+
 
 ---
 
