@@ -69,8 +69,8 @@ Simultaneously, Azure Automation Runbook **`Remediate-AksBankingPods`** authenti
 * **Trigger:** Click **`Trigger OOM Crash (CrashLoopBackOff)`** on the Web Dashboard (or run `./scripts/chaos-test.sh oom`).
 * **Result:** Traffic seamlessly fails over to the healthy replica (`maxUnavailable: 1, maxSurge: 0`), while `alert-p1-aks-memory-oom-pressure` triggers automated pod replacement back to **`Ready: 2/2`**.
 
-![P1 OOM Crash and HA Recovery](./images/demo/03-p1-oom-recovery.png)
-> **📸 Screenshot Note (`03-p1-oom-recovery.png`):** *Chụp terminal `kubectl get pods -l app=banking-app` (hoặc Azure Portal **Workloads**) cho thấy Pod cũ bị `OOMKilled` và tự động hồi phục về trạng thái `2/2 Running`.*
+![P1 OOM Crash and HA Recovery](../images/03.1-p1-oom-recovery.png)
+
 
 ---
 
