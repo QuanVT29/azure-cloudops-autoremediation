@@ -1,3 +1,7 @@
+> [!TIP]
+> **Live Incident & Observability Proof-of-Concept:** View the step-by-step demonstration of full-stack telemetry, KQL threat/fault hunting, automated ServiceNow ITSM ticketing, and `<60s` autonomous pod recovery in **[`docs/incident-showcase.md`](./docs/incident-showcase.md)**.
+<br>
+
 # Autonomous Cloud Operations & Auto-Remediation Platform
 
 [![Azure](https://img.shields.io/badge/Cloud-Microsoft%20Azure-0078D4?logo=microsoft-azure&logoColor=white)](https://azure.microsoft.com/)
