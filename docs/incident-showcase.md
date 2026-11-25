@@ -54,7 +54,7 @@ Simultaneously, Azure Automation Runbook **`Remediate-AksBankingPods`** authenti
 
 * **Objective:** Validate High Availability (HA) continuity and self-healing when a container exceeds its `512Mi` memory limit and is terminated by the Linux `OOMKiller` (Exit Code `137`).
 * **Trigger:** Click **`Trigger OOM Crash (CrashLoopBackOff)`** on the Web Dashboard (or run `./scripts/chaos-test.sh oom`).
-* **Result:** Traffic seamlessly fails over to the healthy replica (`maxUnavailable: 1, maxSurge: 0`), while `alert-p1-aks-memory-oom-pressure` triggers automated pod replacement back to **`Ready: 2/2`**.
+* **Result:** Traffic seamlessly fails over to the healthy replica (`maxUnavailable: 1, maxSurge: 0`), while `alert-p1-aks-memory-oom-pressure` triggers automated pod replacement back to **`Ready: 1/1`**.
 
 ![P1 OOM Crash and HA Recovery](../images/03.1-p1-oom-recovery.png)
 
